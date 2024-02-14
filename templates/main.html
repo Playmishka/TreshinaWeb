@@ -9,7 +9,17 @@
 {% endblock %}
 
 {% block body %}
-<h1>Hello World!</h1>
+<form action="/upload_images_handler" method="post" enctype="multipart/form-data" accept="">
+  <input type="file" name="files" multiple>
+  <input type="submit" value="Upload">
+</form>
+
+123
+<form method="POST" action="/predict">
+  <label for="range_input">Выберите значение диапазона:</label>
+  <input type="range" id="range_input" name="range_input" min="0" max="1" value="0.5" step="0.001">
+  <input type="submit" value="Submit">
+</form>
 {% endblock %}
 
 {% block js %}
