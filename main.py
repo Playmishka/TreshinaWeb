@@ -11,6 +11,7 @@ image_list = []
 
 @app.route("/")
 def home():
+  clean_images()
   return render_template('main.html')
 
 @app.route("/upload_images_handler", methods = ["POST"])
@@ -34,14 +35,25 @@ def upload_imges():
 
 @app.route("/predict", methods=["POST"])
 def prefict():
-  if os.path.exists("static/predict/"):
-    shutil.rmtree("static/predict/")
+  clean_predict()
   range_value = request.form['range_input']
   print(image_list)
   proc.proc(float(range_value), image_list)
   flash("Успех")
   return render_template('main.html')
 
+def clean_predict():
+  if os.path.exists("static/predict/"):
+    shutil.rmtree("static/predict/")
+
+def clean_images():
+  file_list = os.listdir("static/images/")
+
+  for file_name in file_list:
+    if file_name == ".gitkeep":
+      continue
+    file_path = os.path.join("static/images/", file_name)
+    os.remove(file_path)
 
 if __name__ == "__main__":
   app.secret_key = 'super secret key'
