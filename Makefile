@@ -6,14 +6,17 @@ venv:
 install_req:
 	. .venv/bin/activate && pip install flask werkzeug
 
-clean_all:
-	rm -rf .venv
+run:
+	. .venv/bin/activate && python main.py
 
-clean:
-	rm static/images/*.*
+get_requirements:
+	. .venv/bin/activate && pip freeze > requirements.txt
 
 kill_port:
 	npx kill-port 5000
 
-run:
-	. .venv/bin/activate && python main.py
+clean:
+	rm static/images/*.*
+
+clean_all:
+	rm -rf .venv
