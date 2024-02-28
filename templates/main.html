@@ -4,5 +4,28 @@ links %}
   rel="stylesheet"
   href="{{ url_for('static', filename='css/main.css') }}"
 />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-{% endblock %} {% block body %} {% endblock %} {% block js %} {% endblock %}
+{% endblock %} {% block body %}
+
+<div class="container1">
+  <div class="headcontainer">
+    <h1>Определение деформаций сооружений</h1>
+  </div>
+
+  <div class="container">
+    <form action="/upload_images" enctype="multipart/form-data" method="post">
+      <input type="file" id="files" name="files" multiple/>
+      <input type="submit" value="Добавить"/>
+    </form>
+      <form action="predict" method="post" enctype="multipart/form-data">
+          <input type="submit" value="Обработать" id="ImageButton">
+          <input type="range" id="range" min="0" max="1" value="0" step="0.01" />
+      </form>
+
+    <div class="image-container">
+      <div id="loadImages"></div>
+      <div id="processImages"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} {% block js %} {% endblock %}
