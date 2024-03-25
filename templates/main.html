@@ -12,17 +12,33 @@ links %}
   </div>
 
   <div class="container">
-    <form action="/upload_images" enctype="multipart/form-data" method="post">
-      <input type="file" id="files" name="files" multiple/>
-      <input type="submit" value="Добавить"/>
+    <form
+      action="/upload_images_handler"
+      enctype="multipart/form-data"
+      method="post"
+    >
+      <input type="file" id="files" name="files" multiple />
+      <input type="submit" value="Добавить" />
     </form>
-      <form action="predict" method="post" enctype="multipart/form-data">
-          <input type="submit" value="Обработать" id="ImageButton">
-          <input type="range" id="range" min="0" max="1" value="0" step="0.01" />
-      </form>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <input type="submit" value="Обработать" id="ImageButton" />
+      <input
+        type="range"
+        name="range_input"
+        id="range"
+        min="0"
+        max="1"
+        value="0"
+        step="0.01"
+      />
+    </form>
 
     <div class="image-container">
-      <div id="loadImages"></div>
+      <div id="loadImages">
+        {% for image in images %}
+        <img src="{{image}}" alt="Image" />
+        {% endfor %}
+      </div>
       <div id="processImages"></div>
     </div>
   </div>

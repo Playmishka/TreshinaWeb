@@ -14,8 +14,9 @@ def home():
     return render_template("main.html")
 
 
-@app.route("/upload_images", methods=["POST"])
-def upload_images():
+@app.route("/upload_images_handler", methods=["POST"])
+def upload_imges():
+    proc.list_image.clear()
     if "files" not in request.files:
         flash("Не могу прочитать файл!")
         return redirect(request.url)
@@ -24,23 +25,23 @@ def upload_images():
     for file in files:
         if file.filename == "":
             flash("Нет выбранного файла!")
+            return redirect(request.url)
 
         if file:
             filename = secure_filename(file.filename)
             file.save(f"static/images/{filename}")
             proc.list_image.append(f"static/images/{filename}")
             flash("success")
-    return render_template("main.html")
+    return render_template("main.html", images = proc.list_image)
 
 
 @app.route("/predict", methods=["POST"])
-def predict():
+def prefict():
     clean_predict()
     range_value = request.form["range_input"]
     proc.proc(float(range_value))
     flash("Успех")
     return render_template("main.html")
-
 
 def clean_predict():
     if os.path.exists("static/predict/"):

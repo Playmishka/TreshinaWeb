@@ -80,6 +80,7 @@ button {
   /*overflow-y: auto;*/
   max-height: 400px;
   margin-top: 15px;
+  overflow: auto;
 }
 
 .image-container img {
