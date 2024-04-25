@@ -39,9 +39,13 @@ links %}
         <img src="{{image}}" alt="Image" />
         {% endfor %}
       </div>
-      <div id="processImages"></div>
+      <div id="processImages">
+        {% for image in proc_images %}
+        <a href="/{{image}}"><img src="{{image}}" alt="Image" /></a>
+        {% endfor %}
+      </div>
     </div>
   </div>
 </div>
 
-{% endblock %} {% block js %} {% endblock %}
+{% endblock %}

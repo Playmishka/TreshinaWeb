@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, send_file
+from flask import Flask, render_template, request, flash, redirect, send_from_directory, send_file
 from werkzeug.utils import secure_filename
 from Processor import Processor
 import shutil
@@ -17,6 +17,7 @@ def home():
 @app.route("/upload_images_handler", methods=["POST"])
 def upload_imges():
     proc.list_image.clear()
+    proc.procesed_img.clear()
     if "files" not in request.files:
         flash("Не могу прочитать файл!")
         return redirect(request.url)
@@ -40,8 +41,11 @@ def prefict():
     clean_predict()
     range_value = request.form["range_input"]
     proc.proc(float(range_value))
-    flash("Успех")
-    return render_template("main.html")
+
+    file_names = os.listdir("static/predict/")
+    for file in file_names:
+        proc.procesed_img.append(f"static/predict/{file}")
+    return render_template("main.html", proc_images = proc.procesed_img)
 
 def clean_predict():
     if os.path.exists("static/predict/"):
@@ -57,6 +61,11 @@ def clean_images():
         file_path = os.path.join("static/images/", file_name)
         os.remove(file_path)
 
+
+
+@app.route("/download/<image>", methods=["GET"])
+def download_image(image):
+    return send_file(directory="static/predict", path=image, as_attachment=True)
 
 if __name__ == "__main__":
     app.secret_key = "super secret key"
